@@ -5,7 +5,7 @@ import { BackgroundPaths } from "@/components/ui/background-paths";
 export function HeroSection() {
     return (
         <section id="home" className="relative">
-            <BackgroundPaths title="Alex Chen" />
+            <BackgroundPaths title="Alessandro Stella" />
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -14,7 +14,7 @@ export function HeroSection() {
                     className="text-center"
                 >
                     <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-4">
-                        Full-Stack Developer & UI/UX Designer
+                        Business Consultant & UI/UX Designer
                     </p>
                     <motion.div
                         animate={{ y: [0, 10, 0] }}
