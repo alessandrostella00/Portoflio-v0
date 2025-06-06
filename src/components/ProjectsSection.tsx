@@ -10,19 +10,19 @@ export function ProjectsSection() {
 
     const projects = [
         {
-            title: "E-Commerce Platform",
+            title: "Quiz Patente",
             description: "A full-stack e-commerce solution with React, Node.js, and Stripe integration.",
             tech: ["React", "Node.js", "MongoDB", "Stripe"],
             image: "🛒",
         },
         {
-            title: "Task Management App",
+            title: "TPL - MPL - Trasporto Pubblico Locale",
             description: "A collaborative task management tool with real-time updates and team features.",
             tech: ["Next.js", "TypeScript", "Prisma", "Socket.io"],
             image: "📋",
         },
         {
-            title: "AI Chat Assistant",
+            title: "Prompt prompt engineering",
             description: "An AI-powered chat assistant built with OpenAI API and modern UI components.",
             tech: ["React", "OpenAI API", "Tailwind CSS", "Vercel"],
             image: "🤖",
