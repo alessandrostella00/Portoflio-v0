@@ -8,6 +8,7 @@ export function Navigation() {
     const [activeSection, setActiveSection] = useState("home");
     const [isScrolled, setIsScrolled] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(() => {
+        // Check if dark mode is already set
         return document.documentElement.classList.contains('dark');
     });
 
@@ -23,6 +24,7 @@ export function Navigation() {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
             
+            // Update active section based on scroll position
             const sections = navItems.map(item => ({
                 id: item.id,
                 element: document.getElementById(item.id)
@@ -68,7 +70,7 @@ export function Navigation() {
             animate={{ y: 0 }}
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                 isScrolled 
-                    ? "bg-white/70 dark:bg-neutral-900/70 backdrop-blur-xl shadow-sm border-b border-white/20 dark:border-neutral-800/30" 
+                    ? "bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md shadow-lg" 
                     : "bg-transparent"
             }`}
         >
@@ -76,7 +78,7 @@ export function Navigation() {
                 <div className="flex items-center justify-between h-16">
                     <motion.div
                         whileHover={{ scale: 1.05 }}
-                        className="text-xl font-light text-slate-700 dark:text-white cursor-pointer tracking-wide"
+                        className="text-xl font-bold text-neutral-900 dark:text-white cursor-pointer"
                         onClick={() => scrollToSection("home")}
                     >
                         AS
@@ -89,10 +91,10 @@ export function Navigation() {
                                 onClick={() => scrollToSection(item.id)}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className={`text-sm font-light transition-colors ${
+                                className={`text-sm font-medium transition-colors ${
                                     activeSection === item.id
-                                        ? "text-blue-600 dark:text-blue-300"
-                                        : "text-slate-600 dark:text-neutral-300 hover:text-blue-500 dark:hover:text-blue-200"
+                                        ? "text-neutral-900 dark:text-white"
+                                        : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
                                 }`}
                             >
                                 {item.label}
@@ -105,22 +107,22 @@ export function Navigation() {
                             variant="ghost"
                             size="icon"
                             onClick={toggleDarkMode}
-                            className="rounded-full bg-white/50 dark:bg-neutral-800/50 backdrop-blur-sm border border-white/30 dark:border-neutral-700/30 hover:bg-white/80 dark:hover:bg-neutral-700/80"
+                            className="rounded-full"
                         >
                             {isDarkMode ? (
-                                <Sun className="h-4 w-4 text-yellow-500" />
+                                <Sun className="h-4 w-4" />
                             ) : (
-                                <Moon className="h-4 w-4 text-slate-600" />
+                                <Moon className="h-4 w-4" />
                             )}
                         </Button>
 
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="md:hidden p-2 rounded-full bg-white/50 dark:bg-neutral-800/50 backdrop-blur-sm"
+                            className="md:hidden p-2"
                         >
-                            <svg className="w-5 h-5 text-slate-600 dark:text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         </motion.button>
                     </div>
