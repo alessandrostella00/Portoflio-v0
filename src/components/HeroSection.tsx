@@ -3,6 +3,13 @@ import { motion } from "framer-motion";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 
 export function HeroSection() {
+    const scrollToAbout = () => {
+        const element = document.getElementById("about");
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     return (
         <section id="home" className="relative">
             <BackgroundPaths title="Alessandro Stella" />
@@ -16,13 +23,14 @@ export function HeroSection() {
                     <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-4">
                         Business Consultant & UI/UX Designer
                     </p>
-                    <motion.div
+                    <motion.button
+                        onClick={scrollToAbout}
                         animate={{ y: [0, 10, 0] }}
                         transition={{ duration: 2, repeat: Infinity }}
-                        className="w-6 h-10 border-2 border-neutral-400 dark:border-neutral-500 rounded-full flex justify-center"
+                        className="w-6 h-10 border-2 border-neutral-400 dark:border-neutral-500 rounded-full flex justify-center cursor-pointer hover:border-neutral-600 dark:hover:border-neutral-300 transition-colors"
                     >
                         <div className="w-1 h-3 bg-neutral-400 dark:bg-neutral-500 rounded-full mt-2"></div>
-                    </motion.div>
+                    </motion.button>
                 </motion.div>
             </div>
         </section>

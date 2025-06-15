@@ -11,23 +11,45 @@ export function ProjectsSection() {
     const projects = [
         {
             title: "Quiz Patente",
-            description: "A full-stack e-commerce solution with React, Node.js, and Stripe integration.",
-            tech: ["React", "Node.js", "MongoDB", "Stripe"],
-            image: "🛒",
+            description: "A comprehensive driving license quiz application with interactive questions and real-time scoring.",
+            tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+            image: "🚗",
+            demoUrl: "#",
+            codeUrl: "#",
         },
         {
-            title: "TPL - MPL - Trasporto Pubblico Locale",
-            description: "A collaborative task management tool with real-time updates and team features.",
-            tech: ["Next.js", "TypeScript", "Prisma", "Socket.io"],
-            image: "📋",
+            title: "TPL - Trasporto Pubblico Locale",
+            description: "A modern public transportation management system with route planning and real-time updates.",
+            tech: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
+            image: "🚌",
+            demoUrl: "#",
+            codeUrl: "#",
         },
         {
-            title: "Prompt prompt engineering",
-            description: "An AI-powered chat assistant built with OpenAI API and modern UI components.",
-            tech: ["React", "OpenAI API", "Tailwind CSS", "Vercel"],
+            title: "Prompt Engineering Tool",
+            description: "An AI-powered tool for optimizing and testing prompt engineering strategies with analytics.",
+            tech: ["React", "OpenAI API", "Node.js", "MongoDB"],
             image: "🤖",
+            demoUrl: "#",
+            codeUrl: "#",
         },
     ];
+
+    const handleLiveDemo = (url: string, title: string) => {
+        if (url === "#") {
+            alert(`${title} demo will be available soon!`);
+        } else {
+            window.open(url, "_blank");
+        }
+    };
+
+    const handleViewCode = (url: string, title: string) => {
+        if (url === "#") {
+            alert(`${title} source code will be available soon!`);
+        } else {
+            window.open(url, "_blank");
+        }
+    };
 
     return (
         <section id="projects" ref={ref} className="py-24 bg-neutral-50 dark:bg-neutral-900/50">
@@ -70,10 +92,20 @@ export function ProjectsSection() {
                                     ))}
                                 </div>
                                 <div className="flex gap-3">
-                                    <Button variant="outline" size="sm" className="flex-1">
+                                    <Button 
+                                        variant="outline" 
+                                        size="sm" 
+                                        className="flex-1"
+                                        onClick={() => handleLiveDemo(project.demoUrl, project.title)}
+                                    >
                                         Live Demo
                                     </Button>
-                                    <Button variant="ghost" size="sm" className="flex-1">
+                                    <Button 
+                                        variant="ghost" 
+                                        size="sm" 
+                                        className="flex-1"
+                                        onClick={() => handleViewCode(project.codeUrl, project.title)}
+                                    >
                                         Code
                                     </Button>
                                 </div>
