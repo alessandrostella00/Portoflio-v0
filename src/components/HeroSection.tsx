@@ -19,9 +19,9 @@ export function HeroSection() {
     const words = "Alessandro Stella".split(" ");
 
     return (
-        <section id="home" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-white dark:bg-neutral-950">
+        <section id="home" className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-blue-50/30 to-purple-50/20 dark:from-neutral-950 dark:via-neutral-900/80 dark:to-neutral-800/40">
             <canvas
-                className="pointer-events-none absolute inset-0 mx-auto"
+                className="pointer-events-none absolute inset-0 mx-auto opacity-60 dark:opacity-40"
                 id="canvas"
             ></canvas>
 
@@ -32,7 +32,7 @@ export function HeroSection() {
                     transition={{ duration: 2 }}
                     className="max-w-4xl mx-auto"
                 >
-                    <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold mb-8 tracking-tighter">
+                    <h1 className="text-5xl sm:text-7xl md:text-8xl font-light mb-8 tracking-tight">
                         {words.map((word, wordIndex) => (
                             <span
                                 key={wordIndex}
@@ -48,12 +48,12 @@ export function HeroSection() {
                                                 wordIndex * 0.1 +
                                                 letterIndex * 0.03,
                                             type: "spring",
-                                            stiffness: 150,
-                                            damping: 25,
+                                            stiffness: 120,
+                                            damping: 20,
                                         }}
                                         className="inline-block text-transparent bg-clip-text 
-                                        bg-gradient-to-r from-neutral-900 to-neutral-700/80 
-                                        dark:from-white dark:to-white/80"
+                                        bg-gradient-to-r from-slate-700 via-blue-600 to-purple-600 
+                                        dark:from-white dark:via-blue-200 dark:to-purple-200"
                                     >
                                         {letter}
                                     </motion.span>
@@ -63,25 +63,25 @@ export function HeroSection() {
                     </h1>
 
                     <div
-                        className="inline-block group relative bg-gradient-to-b from-black/10 to-white/10 
-                        dark:from-white/10 dark:to-black/10 p-px rounded-2xl backdrop-blur-lg 
-                        overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        className="inline-block group relative bg-gradient-to-b from-white/80 to-blue-50/50 
+                        dark:from-white/10 dark:to-blue-900/20 p-px rounded-3xl backdrop-blur-sm 
+                        overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-white/50 dark:border-white/10"
                     >
                         <Button
                             variant="ghost"
                             onClick={scrollToAbout}
-                            className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md 
-                            bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100 
-                            text-black dark:text-white transition-all duration-300 
-                            group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10
-                            hover:shadow-md dark:hover:shadow-neutral-800/50"
+                            className="rounded-[1.4rem] px-10 py-7 text-lg font-medium backdrop-blur-sm 
+                            bg-white/90 hover:bg-white dark:bg-black/80 dark:hover:bg-black/90 
+                            text-slate-700 dark:text-white transition-all duration-300 
+                            group-hover:-translate-y-1 border-0
+                            hover:shadow-lg dark:hover:shadow-neutral-700/50"
                         >
-                            <span className="opacity-90 group-hover:opacity-100 transition-opacity">
+                            <span className="opacity-80 group-hover:opacity-100 transition-opacity">
                                 Discover Excellence
                             </span>
                             <span
-                                className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 
-                                transition-all duration-300"
+                                className="ml-3 opacity-60 group-hover:opacity-100 group-hover:translate-x-2 
+                                transition-all duration-300 text-blue-500"
                             >
                                 →
                             </span>
@@ -97,16 +97,16 @@ export function HeroSection() {
                     transition={{ delay: 2, duration: 1 }}
                     className="text-center"
                 >
-                    <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-4">
+                    <p className="text-lg text-slate-500 dark:text-neutral-300 mb-4 font-light">
                         Business Consultant & UI/UX Designer
                     </p>
                     <motion.button
                         onClick={scrollToAbout}
-                        animate={{ y: [0, 10, 0] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="w-6 h-10 border-2 border-neutral-400 dark:border-neutral-500 rounded-full flex justify-center cursor-pointer hover:border-neutral-600 dark:hover:border-neutral-300 transition-colors"
+                        animate={{ y: [0, 8, 0] }}
+                        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-6 h-10 border border-slate-300 dark:border-neutral-400 rounded-full flex justify-center cursor-pointer hover:border-blue-400 dark:hover:border-blue-300 transition-colors backdrop-blur-sm bg-white/50 dark:bg-black/30"
                     >
-                        <div className="w-1 h-3 bg-neutral-400 dark:bg-neutral-500 rounded-full mt-2"></div>
+                        <div className="w-1 h-3 bg-slate-400 dark:bg-neutral-400 rounded-full mt-2"></div>
                     </motion.button>
                 </motion.div>
             </div>
