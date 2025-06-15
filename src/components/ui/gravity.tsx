@@ -22,7 +22,7 @@ import Matter, {
   Runner,
   World,
 } from "matter-js"
-import * as decomp from "poly-decomp";
+import decomp from "poly-decomp/build/decomp.js";
 import { cn } from "@/lib/utils"
 
 import SVGPathCommander from 'svg-path-commander';
