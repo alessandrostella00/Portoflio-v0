@@ -22,7 +22,7 @@ import Matter, {
   Runner,
   World,
 } from "matter-js"
-
+import decomp from "poly-decomp";
 import { cn } from "@/lib/utils"
 
 import SVGPathCommander from 'svg-path-commander';
@@ -187,17 +187,17 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
     },
     ref
   ) => {
-    const canvas = useRef<HTMLDivElement>(null)
-    const engine = useRef(Engine.create())
-    const render = useRef<Render>()
-    const runner = useRef<Runner>()
-    const bodiesMap = useRef(new Map<string, PhysicsBody>())
-    const frameId = useRef<number>()
-    const mouseConstraint = useRef<Matter.MouseConstraint>()
-    const mouseDown = useRef(false)
-    const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
+    const canvas = useRef<HTMLDivElement>(null);
+    const engine = useRef(Engine.create());
+    const render = useRef<Render>();
+    const runner = useRef<Runner>();
+    const bodiesMap = useRef(new Map<string, PhysicsBody>());
+    const frameId = useRef<number>();
+    const mouseConstraint = useRef<Matter.MouseConstraint>();
+    const mouseDown = useRef(false);
+    const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
 
-    const isRunning = useRef(false)
+    const isRunning = useRef(false);
 
     // Register Matter.js body in the physics world
     const registerElement = useCallback(
@@ -296,7 +296,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
 
       setCanvasSize({ width, height });
 
-      Common.setDecomp(require("poly-decomp"))
+      Common.setDecomp(decomp);
 
       engine.current.gravity.x = gravity.x
       engine.current.gravity.y = gravity.y
@@ -431,7 +431,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
         }
         startEngine()
       }
-    }, [updateElements, debug, autoStart, gravity, addTopWall, grabCursor])
+    }, [updateElements, debug, autoStart, gravity, addTopWall, grabCursor]);
 
     // Clear the Matter.js world
     const clearRenderer = useCallback(() => {
@@ -459,7 +459,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       }
 
       bodiesMap.current.clear()
-    }, [])
+    }, []);
 
     const handleResize = useCallback(() => {
       if (!canvas.current || !resetOnResize) return
@@ -472,7 +472,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       // Clear and reinitialize
       clearRenderer()
       initializeRenderer()
-    }, [clearRenderer, initializeRenderer, resetOnResize])
+    }, [clearRenderer, initializeRenderer, resetOnResize]);
 
     const startEngine = useCallback(() => {
       if (runner.current) {
@@ -485,7 +485,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       }
       frameId.current = requestAnimationFrame(updateElements)
       isRunning.current = true
-    }, [updateElements])
+    }, [updateElements]);
 
     const stopEngine = useCallback(() => {
       if (!isRunning.current) return
@@ -500,7 +500,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
         cancelAnimationFrame(frameId.current)
       }
       isRunning.current = false
-    }, [])
+    }, []);
 
     const reset = useCallback(() => {
       stopEngine()
@@ -524,7 +524,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       })
       updateElements()
       startEngine()
-    }, [stopEngine, startEngine, canvasSize, updateElements])
+    }, [stopEngine, startEngine, canvasSize, updateElements]);
 
     useImperativeHandle(
       ref,
@@ -534,7 +534,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
         reset,
       }),
       [startEngine, stopEngine, reset]
-    )
+    );
 
     useEffect(() => {
       if (!resetOnResize) return
@@ -546,12 +546,12 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
         window.removeEventListener("resize", debouncedResize)
         debouncedResize.cancel()
       }
-    }, [handleResize, resetOnResize])
+    }, [handleResize, resetOnResize]);
 
     useEffect(() => {
       initializeRenderer()
       return clearRenderer
-    }, [initializeRenderer, clearRenderer])
+    }, [initializeRenderer, clearRenderer]);
 
     return (
       <GravityContext.Provider value={{ registerElement, unregisterElement }}>
@@ -565,7 +565,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
       </GravityContext.Provider>
     )
   }
-)
+);
 
 Gravity.displayName = "Gravity"
 export { Gravity, MatterBody }
