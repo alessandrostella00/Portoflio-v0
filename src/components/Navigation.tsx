@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Menu, X } from "lucide-react";
 
 export function Navigation() {
     const [activeSection, setActiveSection] = useState("home");
@@ -11,6 +11,7 @@ export function Navigation() {
         // Check if dark mode is already set
         return document.documentElement.classList.contains('dark');
     });
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const navItems = [
         { id: "home", label: "Home" },
@@ -51,6 +52,7 @@ export function Navigation() {
         if (element) {
             element.scrollIntoView({ behavior: "smooth" });
         }
+        setIsMobileMenuOpen(false); // Chiudi il menu mobile dopo il click
     };
 
     const toggleDarkMode = () => {
@@ -62,6 +64,10 @@ export function Navigation() {
         } else {
             document.documentElement.classList.remove('dark');
         }
+    };
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
     return (
@@ -84,6 +90,7 @@ export function Navigation() {
                         AS
                     </motion.div>
 
+                    {/* Desktop Menu */}
                     <div className="hidden md:flex space-x-8">
                         {navItems.map((item) => (
                             <motion.button
@@ -96,6 +103,7 @@ export function Navigation() {
                                         ? "text-neutral-900 dark:text-white"
                                         : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
                                 }`}
+                                aria-label={`Vai alla sezione ${item.label}`}
                             >
                                 {item.label}
                             </motion.button>
@@ -108,6 +116,7 @@ export function Navigation() {
                             size="icon"
                             onClick={toggleDarkMode}
                             className="rounded-full"
+                            aria-label={isDarkMode ? "Attiva modalità chiara" : "Attiva modalità scura"}
                         >
                             {isDarkMode ? (
                                 <Sun className="h-4 w-4" />
@@ -116,17 +125,52 @@ export function Navigation() {
                             )}
                         </Button>
 
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="md:hidden p-2"
+                        {/* Mobile Menu Button */}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="md:hidden rounded-full"
+                            onClick={toggleMobileMenu}
+                            aria-label={isMobileMenuOpen ? "Chiudi menu" : "Apri menu"}
+                            aria-expanded={isMobileMenuOpen}
                         >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </motion.button>
+                            {isMobileMenuOpen ? (
+                                <X className="h-6 w-6" />
+                            ) : (
+                                <Menu className="h-6 w-6" />
+                            )}
+                        </Button>
                     </div>
                 </div>
+
+                {/* Mobile Menu */}
+                <motion.div
+                    initial={false}
+                    animate={{
+                        height: isMobileMenuOpen ? "auto" : 0,
+                        opacity: isMobileMenuOpen ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="md:hidden overflow-hidden bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md"
+                >
+                    <div className="py-4 space-y-2">
+                        {navItems.map((item) => (
+                            <motion.button
+                                key={item.id}
+                                onClick={() => scrollToSection(item.id)}
+                                whileTap={{ scale: 0.95 }}
+                                className={`block w-full text-left px-4 py-3 text-sm font-medium transition-colors ${
+                                    activeSection === item.id
+                                        ? "text-neutral-900 dark:text-white bg-neutral-100 dark:bg-neutral-800"
+                                        : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800"
+                                }`}
+                                aria-label={`Vai alla sezione ${item.label}`}
+                            >
+                                {item.label}
+                            </motion.button>
+                        ))}
+                    </div>
+                </motion.div>
             </div>
         </motion.nav>
     );
