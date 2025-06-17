@@ -84,7 +84,7 @@ export function HeroSection() {
         }} transition={{
           duration: 2,
           repeat: Infinity
-        }} className="w-6 h-10 border-2 border-neutral-400 dark:border-neutral-500 rounded-full flex justify-center cursor-pointer hover:border-neutral-600 dark:hover:border-neutral-300 transition-colors">
+        }} className="w-6 h-10 border-2 border-neutral-400 dark:border-neutral-500 rounded-full flex justify-center cursor-pointer hover:border-neutral-600 dark:hover:border-neutral-300 transition-colors px-0 text-left text-base">
                         <div className="w-1 h-3 bg-neutral-400 dark:bg-neutral-500 rounded-full mt-2"></div>
                     </motion.button>
                 </motion.div>
