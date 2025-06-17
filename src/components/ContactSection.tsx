@@ -26,7 +26,7 @@ export function ContactSection() {
 
                     <div className="grid md:grid-cols-3 gap-8 mb-12">
                         {[
-                            { icon: "📧", label: "Email", value: "alex@example.com" },
+                            { icon: "📧", label: "Email", value: "alessandro.stella00@gmail.com" },
                             { icon: "📱", label: "Phone", value: "+1 (555) 123-4567" },
                             { icon: "📍", label: "Location", value: "San Francisco, CA" },
                         ].map((contact, index) => (
