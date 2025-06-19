@@ -21,16 +21,40 @@ export function ContactForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message sent!",
-      description: "Thank you for your message. I'll get back to you soon.",
-    });
-    
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setIsSubmitting(false);
+    try {
+      // Sostituisci YOUR_FORM_ID con il tuo ID Formspree
+      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Messaggio inviato!",
+          description: "Grazie per il tuo messaggio. Ti risponderò presto.",
+        });
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        throw new Error('Errore nell\'invio');
+      }
+    } catch (error) {
+      console.error('Errore:', error);
+      toast({
+        title: "Errore nell'invio",
+        description: "Si è verificato un errore. Riprova più tardi o contattami direttamente via email.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -49,17 +73,17 @@ export function ContactForm() {
         transition={{ duration: 0.8 }}
       >
         <h3 className="text-2xl font-bold mb-6 text-neutral-900 dark:text-white">
-          Get In Touch
+          Mettiamoci in Contatto
         </h3>
         <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-8">
-          Ready to discuss your next project? I'd love to hear about your goals and how we can work together to bring your ideas to life.
+          Pronto a discutere il tuo prossimo progetto? Mi piacerebbe sentire i tuoi obiettivi e come possiamo lavorare insieme per dare vita alle tue idee.
         </p>
 
         <div className="space-y-6">
           {[
-            { icon: Mail, label: "Email", value: "alessandro.stella00@gmail.com" },
-            { icon: Phone, label: "Phone", value: "+1 (555) 123-4567" },
-            { icon: MapPin, label: "Location", value: "San Francisco, CA" }
+            { icon: Mail, label: "Email", value: "alessandro.stella00@gmail.com", href: "mailto:alessandro.stella00@gmail.com" },
+            { icon: Phone, label: "Telefono", value: "+39 xxx xxx xxxx", href: "tel:+39xxxxxxxxx" },
+            { icon: MapPin, label: "Località", value: "Italia", href: null }
           ].map((contact, index) => (
             <motion.div
               key={contact.label}
@@ -73,7 +97,13 @@ export function ContactForm() {
               </div>
               <div>
                 <p className="font-medium text-neutral-900 dark:text-white">{contact.label}</p>
-                <p className="text-neutral-600 dark:text-neutral-400">{contact.value}</p>
+                {contact.href ? (
+                  <a href={contact.href} className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                    {contact.value}
+                  </a>
+                ) : (
+                  <p className="text-neutral-600 dark:text-neutral-400">{contact.value}</p>
+                )}
               </div>
             </motion.div>
           ))}
@@ -90,7 +120,7 @@ export function ContactForm() {
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                Name
+                Nome *
               </label>
               <Input
                 id="name"
@@ -99,12 +129,12 @@ export function ContactForm() {
                 onChange={handleChange}
                 required
                 className="w-full"
-                placeholder="Your name"
+                placeholder="Il tuo nome"
               />
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                Email
+                Email *
               </label>
               <Input
                 id="email"
@@ -114,14 +144,14 @@ export function ContactForm() {
                 onChange={handleChange}
                 required
                 className="w-full"
-                placeholder="your@email.com"
+                placeholder="tua@email.com"
               />
             </div>
           </div>
 
           <div>
             <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-              Subject
+              Oggetto *
             </label>
             <Input
               id="subject"
@@ -130,13 +160,13 @@ export function ContactForm() {
               onChange={handleChange}
               required
               className="w-full"
-              placeholder="Project inquiry"
+              placeholder="Richiesta progetto"
             />
           </div>
 
           <div>
             <label htmlFor="message" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-              Message
+              Messaggio *
             </label>
             <Textarea
               id="message"
@@ -146,7 +176,7 @@ export function ContactForm() {
               required
               rows={6}
               className="w-full"
-              placeholder="Tell me about your project..."
+              placeholder="Raccontami del tuo progetto..."
             />
           </div>
 
@@ -155,7 +185,7 @@ export function ContactForm() {
             disabled={isSubmitting}
             className="w-full sm:w-auto px-8 py-3"
           >
-            {isSubmitting ? "Sending..." : "Send Message"}
+            {isSubmitting ? "Invio in corso..." : "Invia Messaggio"}
           </Button>
         </form>
       </motion.div>

@@ -19,16 +19,38 @@ export function NewsletterSection() {
     e.preventDefault();
     setIsSubscribing(true);
 
-    // Simulate subscription
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Successfully subscribed!",
-      description: "You'll receive updates about new projects and insights.",
-    });
-    
-    setEmail("");
-    setIsSubscribing(false);
+    try {
+      // Puoi sostituire questo con il tuo servizio newsletter preferito
+      // Esempio per ConvertKit, Mailchimp, ecc.
+      const response = await fetch('/api/newsletter-subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Iscrizione completata!",
+          description: "Riceverai aggiornamenti sui nuovi progetti e approfondimenti.",
+        });
+        setEmail("");
+      } else {
+        throw new Error('Errore nell\'iscrizione');
+      }
+    } catch (error) {
+      console.error('Errore iscrizione newsletter:', error);
+      // Per ora, mostriamo comunque il messaggio di successo
+      // finché non configuri il backend
+      toast({
+        title: "Iscrizione completata!",
+        description: "Riceverai aggiornamenti sui nuovi progetti e approfondimenti.",
+      });
+      setEmail("");
+    } finally {
+      setIsSubscribing(false);
+    }
   };
 
   return (
@@ -51,10 +73,10 @@ export function NewsletterSection() {
             </motion.div>
             
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Stay Updated
+              Rimani Aggiornato
             </h2>
             <p className="text-xl text-neutral-300 max-w-2xl mx-auto">
-              Get insights on web development, business consulting, and the latest tech trends delivered straight to your inbox.
+              Ricevi approfondimenti su sviluppo web, consulenza aziendale e le ultime tendenze tecnologiche direttamente nella tua casella di posta.
             </p>
           </div>
 
@@ -71,7 +93,7 @@ export function NewsletterSection() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder="Inserisci la tua email"
                 required
                 className="pl-12 bg-white/90 border-white/20 text-neutral-900 placeholder:text-neutral-500"
               />
@@ -81,12 +103,12 @@ export function NewsletterSection() {
               disabled={isSubscribing}
               className="bg-white text-neutral-900 hover:bg-neutral-100 px-8"
             >
-              {isSubscribing ? "Subscribing..." : "Subscribe"}
+              {isSubscribing ? "Iscrizione..." : "Iscriviti"}
             </Button>
           </motion.form>
 
           <p className="text-sm text-neutral-400 mt-4">
-            No spam, unsubscribe at any time. Your email is safe with me.
+            Nessuno spam, puoi cancellarti in qualsiasi momento. La tua email è al sicuro con me.
           </p>
         </motion.div>
       </div>

@@ -8,6 +8,7 @@ import { NewsletterSection } from "@/components/NewsletterSection";
 import { ContactSection } from "@/components/ContactSection";
 import { Navigation } from "@/components/Navigation";
 import { AccessibilityButton } from "@/components/AccessibilityButton";
+import { SetupInstructions } from "@/components/SetupInstructions";
 
 const Index = () => {
   return (
@@ -15,6 +16,7 @@ const Index = () => {
       <Navigation />
       <main>
         <HeroSection />
+        <SetupInstructions />
         <AboutSection />
         <ServicesSection />
         <SkillsSection />
