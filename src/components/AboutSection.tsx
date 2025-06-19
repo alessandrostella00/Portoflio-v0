@@ -2,10 +2,12 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function AboutSection() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
+    const { t } = useLanguage();
 
     return (
         <section id="about" ref={ref} className="py-24 bg-neutral-50 dark:bg-neutral-900/50">
@@ -17,7 +19,7 @@ export function AboutSection() {
                     className="max-w-4xl mx-auto text-center"
                 >
                     <h2 className="text-4xl md:text-5xl font-bold mb-8 text-neutral-900 dark:text-white">
-                        About Me
+                        {t('about.title')}
                     </h2>
                     
                     <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -28,13 +30,10 @@ export function AboutSection() {
                             className="text-left"
                         >
                             <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-6">
-                                I'm a passionate full-stack developer with over 5 years of experience 
-                                creating digital solutions that make a difference. I specialize in 
-                                modern web technologies and have a keen eye for user experience design.
+                                {t('about.text1')}
                             </p>
                             <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-6">
-                                When I'm not coding, you'll find me exploring new technologies, 
-                                contributing to open-source projects, or hiking in the mountains.
+                                {t('about.text2')}
                             </p>
                             <div className="flex flex-wrap gap-4">
                                 {["React", "TypeScript", "Node.js", "Python", "AWS"].map((tech) => (

@@ -2,10 +2,12 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function SkillsSection() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
+    const { t } = useLanguage();
 
     const skills = [
         { name: "React/Next.js", level: 95 },
@@ -26,7 +28,7 @@ export function SkillsSection() {
                     className="max-w-4xl mx-auto"
                 >
                     <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center text-neutral-900 dark:text-white">
-                        Skills & Expertise
+                        {t('skills.title')}
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-8">

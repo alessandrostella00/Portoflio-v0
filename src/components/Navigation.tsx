@@ -3,22 +3,24 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun, Menu, X } from "lucide-react";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Navigation() {
     const [activeSection, setActiveSection] = useState("home");
     const [isScrolled, setIsScrolled] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(() => {
-        // Check if dark mode is already set
         return document.documentElement.classList.contains('dark');
     });
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { t } = useLanguage();
 
     const navItems = [
-        { id: "home", label: "Home" },
-        { id: "about", label: "About" },
-        { id: "skills", label: "Skills" },
-        { id: "projects", label: "Projects" },
-        { id: "contact", label: "Contact" },
+        { id: "home", label: t('nav.home') },
+        { id: "about", label: t('nav.about') },
+        { id: "skills", label: t('nav.skills') },
+        { id: "projects", label: t('nav.projects') },
+        { id: "contact", label: t('nav.contact') },
     ];
 
     useEffect(() => {
@@ -52,7 +54,7 @@ export function Navigation() {
         if (element) {
             element.scrollIntoView({ behavior: "smooth" });
         }
-        setIsMobileMenuOpen(false); // Chiudi il menu mobile dopo il click
+        setIsMobileMenuOpen(false);
     };
 
     const toggleDarkMode = () => {
@@ -103,20 +105,22 @@ export function Navigation() {
                                         ? "text-neutral-900 dark:text-white"
                                         : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
                                 }`}
-                                aria-label={`Vai alla sezione ${item.label}`}
+                                aria-label={`${t('accessibility.section')} ${item.label}`}
                             >
                                 {item.label}
                             </motion.button>
                         ))}
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <LanguageSelector />
+                        
                         <Button
                             variant="ghost"
                             size="icon"
                             onClick={toggleDarkMode}
                             className="rounded-full"
-                            aria-label={isDarkMode ? "Attiva modalità chiara" : "Attiva modalità scura"}
+                            aria-label={isDarkMode ? t('accessibility.light') : t('accessibility.dark')}
                         >
                             {isDarkMode ? (
                                 <Sun className="h-4 w-4" />
@@ -131,7 +135,7 @@ export function Navigation() {
                             size="icon"
                             className="md:hidden rounded-full"
                             onClick={toggleMobileMenu}
-                            aria-label={isMobileMenuOpen ? "Chiudi menu" : "Apri menu"}
+                            aria-label={isMobileMenuOpen ? t('accessibility.menu.close') : t('accessibility.menu.open')}
                             aria-expanded={isMobileMenuOpen}
                         >
                             {isMobileMenuOpen ? (
@@ -164,7 +168,7 @@ export function Navigation() {
                                         ? "text-neutral-900 dark:text-white bg-neutral-100 dark:bg-neutral-800"
                                         : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800"
                                 }`}
-                                aria-label={`Vai alla sezione ${item.label}`}
+                                aria-label={`${t('accessibility.section')} ${item.label}`}
                             >
                                 {item.label}
                             </motion.button>
